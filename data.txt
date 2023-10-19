@@ -1,13 +1,14 @@
-1, Great Expectations, Charles Dickens, 1861, 4, 800
-1, The Stranger, Albert Camus, 1942, 3, 600
+1, Great Expectations, Charles Dickens, 1861, 7, 800
+1, The Stranger, Albert Camus, 1942, 4, 600
 1, Beloved, Toni Morrison, 1987, 2, 400
 1, The Road, Cormac McCarthy, 2006, 1, 200
-1, One Hundred Years of Solitude, Gabriel García Márquez, 1967, 5, 1000
-1, War and Peace, Leo Tolstoy, 1869, 4, 800
+1, One Hundred Years of Solitude, Gabriel García Márquez, 1967, 7, 1000
+1, War and Peace, Leo Tolstoy, 1869, 5, 800
 1, The Sound and the Fury, William Faulkner, 1929, 3, 600
 1, Ulysses, James Joyce, 1922, 2, 400
 1, The Divine Comedy, Dante Alighieri, 1320, 1, 200
-1, Anna Karenina, Leo Tolstoy, 1877, 5, 1000
+1, Anna Karenina, Leo Tolstoy, 1877, 6, 1000
 1, The Sun Also Rises, Ernest Hemingway, 1926, 4, 800
 1, Frankenstein, Mary Shelley, 1818, 3, 600
-1, Dracula, Bram Stoker, 1897, 2, 400
+1, Dracula, Bram Stoker, 1897, 4, 400
+1, Tayyab, qweerty, 2013, 16, 234

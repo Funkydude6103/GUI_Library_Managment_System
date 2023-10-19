@@ -1,0 +1,73 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+public class FileViewerApp {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> createAndShowGUI());
+    }
+
+    public static void createAndShowGUI() {
+        JFrame frame = new JFrame("File Viewer");
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setSize(600, 400);
+        frame.setLayout(new BorderLayout());
+
+        JTextArea textArea = new JTextArea();
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        textArea.setWrapStyleWord(true);
+        textArea.setLineWrap(true);
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem openMenuItem = new JMenuItem("Open");
+        JMenuItem exitMenuItem = new JMenuItem("Exit");
+
+        openMenuItem.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            int returnVal = fileChooser.showOpenDialog(null);
+
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                if (selectedFile != null) {
+                    try {
+                        String content = Files.readString(selectedFile.toPath());
+                        textArea.setText(content);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                        JOptionPane.showMessageDialog(frame, "Error reading the file.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+
+        exitMenuItem.addActionListener(e -> {
+            int option = JOptionPane.showConfirmDialog(frame, "Are you sure you want to exit?", "Exit Confirmation", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                frame.dispose();
+            }
+        });
+
+        fileMenu.add(openMenuItem);
+        fileMenu.add(exitMenuItem);
+        menuBar.add(fileMenu);
+
+        frame.setJMenuBar(menuBar);
+        frame.add(scrollPane, BorderLayout.CENTER);
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int option = JOptionPane.showConfirmDialog(frame, "Are you sure you want to exit?", "Exit Confirmation", JOptionPane.YES_NO_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    frame.dispose();
+                }
+            }
+        });
+
+        frame.setVisible(true);
+    }
+}

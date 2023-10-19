@@ -6,6 +6,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +19,7 @@ class AddItemForm {
         public static void createAndShowGUI()
         {
                 frame = new JFrame("AddItem Form");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setSize(400, 200);
                 JPanel panel = new JPanel();
                 panel.setLayout(new GridLayout(5, 2));
@@ -113,7 +116,7 @@ class EditItemForm {
         public static void createAndShowGUI(String tittle_)
         {
                 frame = new JFrame("EditItem Form");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setSize(400, 200);
                 JPanel panel = new JPanel();
                 panel.setLayout(new GridLayout(5, 2));
@@ -471,6 +474,41 @@ class ButtonEditor extends DefaultCellEditor {
                                         }
                                 }
                                         library.saveInFile(itemList);
+                                File file = new File(tittle+".txt");
+                                if(file.exists() && file.isFile())
+                                {
+                                      JFrame bookview=new JFrame(tittle);
+                                      bookview.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                                      bookview.setSize(700,503);
+                                      bookview.setLayout(new BorderLayout());
+                                      JTextArea textArea = new JTextArea();
+                                      JScrollPane scrollPane = new JScrollPane(textArea);
+                                        try {
+                                                String content= Files.readString(file.toPath());
+                                                textArea.setText(content);
+                                        } catch (IOException ex) {
+                                                throw new RuntimeException(ex);
+                                        }
+                                        textArea.setEditable(false);
+                                        bookview.add(scrollPane);
+                                        bookview.setVisible(true);
+                                        bookview.addWindowListener(new WindowAdapter() {
+                                                @Override
+                                                public void windowClosing(WindowEvent e) {
+                                                        int option = JOptionPane.showConfirmDialog(bookview, "Are you sure you want to exit?", "Exit Confirmation", JOptionPane.YES_NO_OPTION);
+                                                        if (option == JOptionPane.YES_OPTION) {
+                                                                bookview.dispose();
+                                                        }
+                                                        else {
+                                                        }
+                                                }
+                                        });
+
+                                }
+                                else
+                                {
+                                        JOptionPane.showMessageDialog(null,"File does not exist");
+                                }
                         }
                 });
         }
