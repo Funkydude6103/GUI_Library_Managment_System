@@ -1,53 +1,53 @@
+package LibraryManagement;
 
+import LibraryManagement.Item;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-public class Newspaper extends Item
+public class Book extends Item
 {
- private String publisher;
- private Date date;
- private  final int publisherCharges=5;
+    private String author;
+    private int year;
+    private final int GST=200;
 
-    public String getPublisher()
+    public int getYear()
     {
-        return publisher;
+        return year;
     }
 
-    public void setPublisher(String publisher)
+    public void setYear(int year)
     {
-        this.publisher = publisher;
+        this.year = year;
     }
 
-    public Date getDate()
+    public String getAuthor()
     {
-        return date;
+        return author;
     }
 
-    public void setDate(Date date)
+    public void setAuthor(String author)
     {
-        this.date = date;
-    }
-
-    @Override
-    public int calculateCost()
-    {
-        return 10+publisherCharges;
+        this.author = author;
     }
 
     @Override
     public void displayInfo()
     {
-        System.out.println("Newspaper ID: "+this.getId());
-        System.out.println("Newspaper Tittle: "+this.getTittle());
-        System.out.println("Newspaper Publisher: "+this.getPublisher());
-        System.out.println("Newspaper Popularity Count: "+this.getPopularityCount());
-        System.out.println("Newspaper Date: "+this.getDate());
-        System.out.println("Newspaper Total Cost: "+this.calculateCost());
+        System.out.println("LibraryManagement.Book ID: "+this.getId());
+        System.out.println("LibraryManagement.Book Tittle: "+this.getTittle());
+        System.out.println("LibraryManagement.Book Author: "+this.getAuthor());
+        System.out.println("LibraryManagement.Book Year: "+this.getYear());
+        System.out.println("LibraryManagement.Book's Popularity Count: "+this.getPopularityCount());
+        System.out.println("LibraryManagement.Book Price: "+this.getCost());
+        System.out.println("LibraryManagement.Book Total Price: "+this.calculateCost());
+    }
+
+    @Override
+    public int calculateCost()
+    {
+        return (int) (this.getCost()+(0.20*this.getCost())+GST);
     }
     @Override
     public void edit()
@@ -55,10 +55,11 @@ public class Newspaper extends Item
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose the attributes to edit (enter the corresponding numbers without spaces):");
         System.out.println("1. Title");
-        System.out.println("2. Publisher");
+        System.out.println("2. Author");
         System.out.println("3. Borrowed Status");
-        System.out.println("4. Published Date");
+        System.out.println("4. Published Year");
         System.out.println("5. Popularity Count");
+        System.out.println("6. Cost");
         String attributeChoices = scanner.next();
         List<Integer> choices = new ArrayList<>();
         for (char choiceChar : attributeChoices.toCharArray())
@@ -75,9 +76,9 @@ public class Newspaper extends Item
                     this.setTittle(newTitle);
                 }
                 case 2 -> {
-                    System.out.println("Enter the new Publisher:");
-                    String publisher = scanner.nextLine();
-                    this.setPublisher(publisher);
+                    System.out.println("Enter the new Author:");
+                    String author = scanner.nextLine();
+                    this.setAuthor(author);
                 }
                 case 3 -> {
                     System.out.println("Enter the new borrowed status (true/false):");
@@ -85,16 +86,9 @@ public class Newspaper extends Item
                     this.setBorrowed(newBorrowedStatus);
                 }
                 case 4 -> {
-                    String userInput = scanner.nextLine();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                    dateFormat.setLenient(false);
-                    try {
-                        Date date = dateFormat.parse(userInput);
-                        this.setDate(date);
-                        System.out.println("Date entered: " + dateFormat.format(date));
-                    } catch (ParseException e) {
-                        System.err.println("Invalid date format. Please enter a date in dd-mm-yyyy format.");
-                    }
+                    System.out.println("Enter the new Published Year:");
+                    int publishYear = scanner.nextInt();
+                    this.setYear(publishYear);
                 }
                 case 5 -> {
                     System.out.println("Enter the new popularity count:");
@@ -109,6 +103,8 @@ public class Newspaper extends Item
                 default -> System.out.println("Invalid choice: " + choice);
             }
         }
+
+
 
     }
 }

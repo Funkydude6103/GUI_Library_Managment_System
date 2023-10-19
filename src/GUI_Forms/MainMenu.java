@@ -4,18 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
 public class MainMenu
 {
     public static void createAndShowGUI() {
-        JFrame frame = new JFrame("Library Management System");
+        JFrame frame = new JFrame("LibraryManagement.Library Management System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setLayout(new BorderLayout());
 
-        // Set the background image
         ImageIcon backgroundImage = new ImageIcon("background.jpg");
         JLabel backgroundLabel = new JLabel(backgroundImage);
         backgroundLabel.setLayout(new BorderLayout());
@@ -28,13 +25,13 @@ public class MainMenu
         String[] menuItems = {
                 "Hot Picks!",
                 "Borrow an item",
-                "Add Item",
-                "Edit Item",
-                "Delete Item",
+                "Add LibraryManagement.Item",
+                "Edit LibraryManagement.Item",
+                "Delete LibraryManagement.Item",
                 "View All Items",
-                "View Item by ID",
+                "View LibraryManagement.Item by ID",
                 "View Borrowers List",
-                "Return A Book",
+                "Return A LibraryManagement.Book",
                 "Exit"
         };
 
@@ -49,8 +46,15 @@ public class MainMenu
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // Handle button click actions here
-                    JOptionPane.showMessageDialog(frame, "You clicked " + item);
+                    if(item.equals("Exit"))
+                    {
+                        frame.dispose();
+                    }
+                    if(item.equals("View All Items"))
+                    {
+                        frame.dispose();
+                        SwingUtilities.invokeLater(All_Items::createAndShowGUI);
+                    }
                 }
             });
             menuPanel.add(button);

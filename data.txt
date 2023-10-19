@@ -1,5 +1,5 @@
-1, The Great Gatsby, F. Scott Fitzgerald, 1925, 5, 15
-1, To Kill a Mockingbird, Harper Lee, 1960, 4, 12
+1, The Great Gatsby, F. Scott Fitzgerald, 1925, 8, 15
+1, To Kill a Mockingbird, Harper Lee, 1960, 7, 12
 2, National Geographic, John Smith, Mary Johnson., hello, 15, 30
 2, Time Magazine, James Brown, Sarah White., hello, 12, 25
 3, The New York Times, The New York Times Company, 1, 20-09-2023

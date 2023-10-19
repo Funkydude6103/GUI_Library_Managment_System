@@ -1,61 +1,30 @@
+package LibraryManagement;
 
+import LibraryManagement.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Book extends Item 
+public class Magazine extends Item
 {
-    private String author;
-    private int year;
-    private final int GST=200;
+    private String publisher;
+    private List<String> authorList;
 
-    public int getYear()
+    public String getPublisher()
     {
-        return year;
+        return publisher;
     }
 
-    public void setYear(int year)
-    {
-        this.year = year;
-    }
-
-    public String getAuthor()
-    {
-        return author;
-    }
-
-    public void setAuthor(String author)
-    {
-        this.author = author;
-    }
-
-    @Override
-    public void displayInfo()
-    {
-        System.out.println("Book ID: "+this.getId());
-        System.out.println("Book Tittle: "+this.getTittle());
-        System.out.println("Book Author: "+this.getAuthor());
-        System.out.println("Book Year: "+this.getYear());
-        System.out.println("Book's Popularity Count: "+this.getPopularityCount());
-        System.out.println("Book Price: "+this.getCost());
-        System.out.println("Book Total Price: "+this.calculateCost());
-    }
-
-    @Override
-    public int calculateCost()
-    {
-        return (int) (this.getCost()+(0.20*this.getCost())+GST);
-    }
     @Override
     public void edit()
     {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose the attributes to edit (enter the corresponding numbers without spaces):");
         System.out.println("1. Title");
-        System.out.println("2. Author");
+        System.out.println("2. Authors");
         System.out.println("3. Borrowed Status");
-        System.out.println("4. Published Year");
+        System.out.println("4. Publisher");
         System.out.println("5. Popularity Count");
         System.out.println("6. Cost");
         String attributeChoices = scanner.next();
@@ -74,9 +43,16 @@ public class Book extends Item
                     this.setTittle(newTitle);
                 }
                 case 2 -> {
-                    System.out.println("Enter the new Author:");
-                    String author = scanner.nextLine();
-                    this.setAuthor(author);
+                    System.out.println("Enter the Authors of LibraryManagement.Book and Enter 0 to exit entering Authors: ");
+                    List<String> authors=new ArrayList<>();
+                    while(true)
+                    {
+                        String input = scanner.nextLine();
+                        if (input.equals("0"))
+                            break;
+                        authors.add(input);
+                    }
+                    this.setAuthorList(authors);
                 }
                 case 3 -> {
                     System.out.println("Enter the new borrowed status (true/false):");
@@ -85,8 +61,8 @@ public class Book extends Item
                 }
                 case 4 -> {
                     System.out.println("Enter the new Published Year:");
-                    int publishYear = scanner.nextInt();
-                    this.setYear(publishYear);
+                    String publisher = scanner.nextLine();
+                    this.setPublisher(publisher);
                 }
                 case 5 -> {
                     System.out.println("Enter the new popularity count:");
@@ -103,6 +79,38 @@ public class Book extends Item
         }
 
 
+    }
 
+    public void setPublisher(String publisher)
+    {
+        this.publisher = publisher;
+    }
+
+    public List<String> getAuthorList()
+    {
+        return authorList;
+    }
+
+    public void setAuthorList(List<String> authorList)
+    {
+        this.authorList = authorList;
+    }
+
+    @Override
+    public int calculateCost()
+    {
+        return this.getCost()*this.getPopularityCount();
+    }
+
+    @Override
+    public void displayInfo()
+    {
+        System.out.println("LibraryManagement.Magazine ID: "+this.getId());
+        System.out.println("LibraryManagement.Magazine Tittle: "+this.getTittle());
+        System.out.println("LibraryManagement.Magazine Authors: "+this.getAuthorList());
+        System.out.println("LibraryManagement.Magazine Publisher Company: "+this.getPublisher());
+        System.out.println("LibraryManagement.Magazine Popularity Count: "+this.getPopularityCount());
+        System.out.println("LibraryManagement.Magazine Price: "+this.getCost());
+        System.out.println("LibraryManagement.Magazine Total Price: "+this.calculateCost());
     }
 }
