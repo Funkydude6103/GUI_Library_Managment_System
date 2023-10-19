@@ -1,10 +1,13 @@
-1, The Great Gatsby, F. Scott Fitzgerald, 1925, 8, 15
-1, To Kill a Mockingbird, Harper Lee, 1960, 7, 12
-2, National Geographic, John Smith, Mary Johnson., hello, 15, 30
-2, Time Magazine, James Brown, Sarah White., hello, 12, 25
-3, The New York Times, The New York Times Company, 1, 20-09-2023
-3, The Guardian, Guardian Media Group, 1, 20-09-2023
-2, Science Today, John Smith, Mary Johnson, Robert Davis, Tayyab Anees, Emily White., Hello, 20, 40
-2, Technology Trends, David Brown, Sarah Wilson, Michael Jackson., Hello, 15, 35
-2, Science Today, John Smith, Mary Johnson, Robert Davis, Tayyab Anees, Emily White., Hello, 20, 40
-2, Technology Trends, David Brown, Sarah Wilson, Michael Jackson., Hello, 15, 35
+1, Great Expectations, Charles Dickens, 1861, 4, 800
+1, The Stranger, Albert Camus, 1942, 3, 600
+1, Beloved, Toni Morrison, 1987, 2, 400
+1, The Road, Cormac McCarthy, 2006, 1, 200
+1, One Hundred Years of Solitude, Gabriel García Márquez, 1967, 5, 1000
+1, War and Peace, Leo Tolstoy, 1869, 4, 800
+1, The Sound and the Fury, William Faulkner, 1929, 3, 600
+1, Ulysses, James Joyce, 1922, 2, 400
+1, The Divine Comedy, Dante Alighieri, 1320, 1, 200
+1, Anna Karenina, Leo Tolstoy, 1877, 5, 1000
+1, The Sun Also Rises, Ernest Hemingway, 1926, 4, 800
+1, Frankenstein, Mary Shelley, 1818, 3, 600
+1, Dracula, Bram Stoker, 1897, 2, 400

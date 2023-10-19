@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class MainMenu
 {
@@ -24,16 +26,16 @@ public class MainMenu
 
         String[] menuItems = {
                 "Hot Picks!",
-                "Borrow an item",
-                "Add LibraryManagement.Item",
-                "Edit LibraryManagement.Item",
-                "Delete LibraryManagement.Item",
-                "View All Items",
-                "View LibraryManagement.Item by ID",
-                "View Borrowers List",
-                "Return A LibraryManagement.Book",
+                "Manage Items",
                 "Exit"
         };
+        JLabel head = new JLabel("Library Management System");
+        head.setFont(new Font("Arial", Font.BOLD, 25));
+        head.setForeground(Color.white);
+        JPanel headPanel=new JPanel(new FlowLayout(FlowLayout.CENTER));
+        headPanel.setBackground(Color.BLACK);
+        headPanel.add(head);
+        menuPanel.add(headPanel);
 
         for (String item : menuItems) {
             JButton button = new JButton(item);
@@ -50,19 +52,31 @@ public class MainMenu
                     {
                         frame.dispose();
                     }
-                    if(item.equals("View All Items"))
+                    if(item.equals("Manage Items"))
                     {
                         frame.dispose();
                         SwingUtilities.invokeLater(All_Items::createAndShowGUI);
+                    }
+                    if (item.equals("Hot Picks!"))
+                    {
+                        frame.dispose();
+                        SwingUtilities.invokeLater(HotPicks::createAndShowGUI);
                     }
                 }
             });
             menuPanel.add(button);
         }
-
-        frame.setSize(673,503);
+        frame.setSize(537,421);
         frame.setResizable(false);
         frame.add(menuPanel, BorderLayout.CENTER);
         frame.setVisible(true);
+
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                Dimension size = frame.getSize();
+                System.out.println("Frame Size: " + size.width + "x" + size.height);
+            }
+        });
     }
 }

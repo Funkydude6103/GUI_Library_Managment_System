@@ -1,17 +1,231 @@
 package GUI_Forms;
 import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import LibraryManagement.*;
+class AddItemForm {
+        static JFrame frame;
+        public static void createAndShowGUI()
+        {
+                frame = new JFrame("AddItem Form");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setSize(400, 200);
+                JPanel panel = new JPanel();
+                panel.setLayout(new GridLayout(5, 2));
+                JTextField titleField = new JTextField(20);
+                JTextField authorField = new JTextField(20);
+                JTextField yearField = new JTextField(4);
+                JTextField priceField = new JTextField(10);
+                JLabel titleLabel = new JLabel("Title:");
+                JLabel authorLabel = new JLabel("Author:");
+                JLabel yearLabel = new JLabel("Published Year:");
+                JLabel priceLabel = new JLabel("Price:");
+                JButton saveButton = new JButton("Add");
+                Library library=new Library();
+                List<Item> itemList=library.loadFromFileReturn();
+                saveButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                                String title = titleField.getText();
+                                String author = authorField.getText();
+                                String yearText = yearField.getText();
+                                String priceText = priceField.getText();
+                                int year = -1;
+                                try {
+                                        year = Integer.parseInt(yearText);
+                                } catch (NumberFormatException ex) {
+                                        JOptionPane.showMessageDialog(frame, "Invalid year input. Please enter a valid year.");
+                                        return;
+                                }
+                                int price = -1;
+                                try {
+                                        price = Integer.parseInt(priceText);
+                                } catch (NumberFormatException ex) {
+                                        JOptionPane.showMessageDialog(frame, "Invalid price input. Please enter a valid price.");
+                                        return;
+                                }
+                                if(!title.equals("") && !author.equals("")) {
+                                        System.out.println("Title: " + title);
+                                        System.out.println("Author: " + author);
+                                        System.out.println("Published Year: " + year);
+                                        System.out.println("Price: " + price);
+                                        int response = JOptionPane.showConfirmDialog(
+                                                null,
+                                                "Are you sure?",
+                                                "Confirmation",
+                                                JOptionPane.YES_NO_OPTION
+                                        );
 
+                                        if (response == JOptionPane.YES_OPTION) {
+                                               Book book=new Book();
+                                               book.setTittle(title);
+                                               book.setAuthor(author);
+                                               book.setYear(year);
+                                               book.setCost(price);
+                                               itemList.add(book);
+                                                library.saveInFile(itemList);
+                                                JOptionPane.showMessageDialog(frame, "Item Addition Complete");
+                                                frame.dispose();
+
+                                        } else if (response == JOptionPane.NO_OPTION) {
+
+                                        } else if (response == JOptionPane.CLOSED_OPTION) {
+
+                                        }
+                                }
+                                else
+                                {
+                                        JOptionPane.showMessageDialog(frame, "Fill all Fields");
+                                        return;
+                                }
+                        }
+                });
+                panel.add(titleLabel);
+                panel.add(titleField);
+                panel.add(authorLabel);
+                panel.add(authorField);
+                panel.add(yearLabel);
+                panel.add(yearField);
+                panel.add(priceLabel);
+                panel.add(priceField);
+                panel.add(new JLabel());
+                panel.add(saveButton);
+
+                frame.add(panel);
+                frame.setVisible(true);
+        }
+
+        public static JFrame getFrame() {
+                return frame;
+        }
+}
+
+class EditItemForm {
+        static JFrame frame;
+        public static void createAndShowGUI(String tittle_)
+        {
+                frame = new JFrame("EditItem Form");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setSize(400, 200);
+                JPanel panel = new JPanel();
+                panel.setLayout(new GridLayout(5, 2));
+                JTextField titleField = new JTextField(20);
+                JTextField authorField = new JTextField(20);
+                JTextField yearField = new JTextField(4);
+                JTextField priceField = new JTextField(10);
+                JLabel titleLabel = new JLabel("Title:");
+                JLabel authorLabel = new JLabel("Author:");
+                JLabel yearLabel = new JLabel("Published Year:");
+                JLabel priceLabel = new JLabel("Price:");
+                JButton saveButton = new JButton("Save");
+                Library library=new Library();
+                List<Item> itemList=library.loadFromFileReturn();
+                for (Item item:itemList)
+                {
+                        if(item.getTittle().equals(tittle_))
+                        {
+                                if(item instanceof Book) {
+                                        titleField.setText(item.getTittle());
+                                        authorField.setText(((Book) item).getAuthor());
+                                        yearField.setText(String.valueOf(((Book) item).getYear()));
+                                        priceField.setText(String.valueOf(((Book) item).getCost()));
+                                        break;
+                                }
+                        }
+                }
+                saveButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                                String title = titleField.getText();
+                                String author = authorField.getText();
+                                String yearText = yearField.getText();
+                                String priceText = priceField.getText();
+                                int year = -1;
+                                try {
+                                        year = Integer.parseInt(yearText);
+                                } catch (NumberFormatException ex) {
+                                        JOptionPane.showMessageDialog(frame, "Invalid year input. Please enter a valid year.");
+                                        return;
+                                }
+                                int price = -1;
+                                try {
+                                        price = Integer.parseInt(priceText);
+                                } catch (NumberFormatException ex) {
+                                        JOptionPane.showMessageDialog(frame, "Invalid price input. Please enter a valid price.");
+                                        return;
+                                }
+                                if(!title.equals("") && !author.equals("")) {
+                                        System.out.println("Title: " + title);
+                                        System.out.println("Author: " + author);
+                                        System.out.println("Published Year: " + year);
+                                        System.out.println("Price: " + price);
+                                        int response = JOptionPane.showConfirmDialog(
+                                                null,
+                                                "Are you sure you?",
+                                                "Confirmation",
+                                                JOptionPane.YES_NO_OPTION
+                                        );
+
+                                        if (response == JOptionPane.YES_OPTION) {
+                                                for (Item item:itemList)
+                                                {
+                                                        if(item.getTittle().equals(tittle_))
+                                                        {
+                                                                if(item instanceof Book) {
+                                                                        item.setTittle(title);
+                                                                        ((Book) item).setAuthor(author);
+                                                                        ((Book) item).setYear(year);
+                                                                        item.setCost(price);
+                                                                        break;
+                                                                }
+                                                        }
+                                                }
+                                                library.saveInFile(itemList);
+                                                JOptionPane.showMessageDialog(frame, "Item Edit Complete");
+                                                frame.dispose();
+
+                                        } else if (response == JOptionPane.NO_OPTION) {
+
+                                        } else if (response == JOptionPane.CLOSED_OPTION) {
+
+                                        }
+                                }
+                                else
+                                {
+                                        JOptionPane.showMessageDialog(frame, "Fill all Fields");
+                                        return;
+                                }
+                        }
+                });
+                panel.add(titleLabel);
+                panel.add(titleField);
+                panel.add(authorLabel);
+                panel.add(authorField);
+                panel.add(yearLabel);
+                panel.add(yearField);
+                panel.add(priceLabel);
+                panel.add(priceField);
+                panel.add(new JLabel());
+                panel.add(saveButton);
+
+                frame.add(panel);
+                frame.setVisible(true);
+//                frame.addWindowListener(new WindowListener() {
+//                });
+        }
+
+        public static JFrame getFrame() {
+                return frame;
+        }
+}
 public class All_Items {
         public static void createAndShowGUI() {
                 JFrame frame = new JFrame("Items Management");
@@ -60,6 +274,21 @@ public class All_Items {
 
                 jTable.setDragEnabled(false);
                 jTable.setOpaque(false);
+                jTable.addMouseMotionListener(new MouseInputAdapter() {
+                        private int highlightedRow = -1;
+
+                        @Override
+                        public void mouseMoved(MouseEvent e) {
+                                int row = jTable.rowAtPoint(e.getPoint());
+                                if (row != highlightedRow) {
+                                        if (highlightedRow >= 0) {
+                                                jTable.removeRowSelectionInterval(highlightedRow, highlightedRow);
+                                        }
+                                        highlightedRow = row;
+                                        jTable.addRowSelectionInterval(row, row);
+                                }
+                        }
+                });
 
 
                 JScrollPane scrollPane = new JScrollPane(jTable);
@@ -73,6 +302,21 @@ public class All_Items {
                 add.setBackground(Color.BLACK);
                 add.setForeground(Color.white);
                 add.setFont(new Font("Arial", Font.BOLD, 25));
+                add.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                                AddItemForm.createAndShowGUI();
+                                JFrame addFrame = AddItemForm.getFrame();
+                                addFrame.addWindowListener(new WindowAdapter() {
+                                        @Override
+                                        public void windowClosed(WindowEvent e) {
+                                                frame.dispose();
+                                                SwingUtilities.invokeLater(All_Items::createAndShowGUI);
+                                        }
+                                });
+
+                        }
+                });
 
                 JButton edit = new JButton("Edit Item");
                 edit.setOpaque(true);
@@ -85,9 +329,21 @@ public class All_Items {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                                 int selectedRow = jTable.getSelectedRow();
-                                if (selectedRow >= 0) {
-                                        Item selectedItem = list.get(selectedRow);
-
+                                if (selectedRow >= 0)
+                                {
+                                        System.out.println(jTable.getValueAt(selectedRow,1));
+                                        EditItemForm.createAndShowGUI((String)jTable.getValueAt(selectedRow,1));
+                                        JFrame editFrame = EditItemForm.getFrame();
+                                        editFrame.addWindowListener(new WindowAdapter() {
+                                                @Override
+                                                public void windowClosed(WindowEvent e) {
+                                                        frame.dispose();
+                                                        SwingUtilities.invokeLater(All_Items::createAndShowGUI);
+                                                }
+                                        });
+                                }
+                                else {
+                                        JOptionPane.showMessageDialog(frame, "Please Select a Item form the Table");
                                 }
                         }
                 });
@@ -101,6 +357,49 @@ public class All_Items {
                 delete.setForeground(Color.white);
                 delete.setFont(new Font("Arial", Font.BOLD, 25));
 
+                delete.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                                int selectedRow = jTable.getSelectedRow();
+                                if (selectedRow >= 0)
+                                {
+                                        System.out.println(jTable.getValueAt(selectedRow,1));
+                                        String name=(String)jTable.getValueAt(selectedRow,1);
+
+                                        int response = JOptionPane.showConfirmDialog(
+                                                null,
+                                                "Are you sure you?",
+                                                "Confirmation",
+                                                JOptionPane.YES_NO_OPTION
+                                        );
+
+                                        if (response == JOptionPane.YES_OPTION) {
+                                                for(Item i:list)
+                                                {
+                                                        if(i.getTittle().equals(name))
+                                                        {
+                                                                list.remove(i);
+                                                                library.saveInFile(list);
+                                                                break;
+                                                        }
+                                                }
+                                                frame.dispose();
+                                                SwingUtilities.invokeLater(All_Items::createAndShowGUI);
+
+                                        } else if (response == JOptionPane.NO_OPTION) {
+
+                                        } else if (response == JOptionPane.CLOSED_OPTION) {
+
+                                        }
+                                }
+
+                                else
+                                {
+                                        JOptionPane.showMessageDialog(frame, "Please Select a Item form the Table");
+                                }
+                        }
+                });
+
 
                 JButton back = new JButton("Back");
                 back.setOpaque(true);
@@ -109,6 +408,13 @@ public class All_Items {
                 back.setBackground(Color.BLACK);
                 back.setForeground(Color.white);
                 back.setFont(new Font("Arial", Font.BOLD, 25));
+                back.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                                frame.dispose();
+                                MainMenu.createAndShowGUI();
+                        }
+                });
 
                 JPanel buttons=new JPanel();
                 buttons.setLayout(new FlowLayout(FlowLayout.CENTER));

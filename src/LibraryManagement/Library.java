@@ -432,6 +432,13 @@ public class Library
         }
 
     }
+
+    public List<Item> returnHotPicks(List<Item> itemList1)
+    {
+        List<Item> i=new ArrayList<>(itemList1);
+        i.sort((item1, item2) -> Integer.compare(item2.getPopularityCount(), item1.getPopularityCount()));
+        return i;
+    }
     public void displayAvailableItems()
     {
         System.out.println("Available Books:");
